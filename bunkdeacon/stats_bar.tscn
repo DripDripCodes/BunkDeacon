@@ -1,0 +1,76 @@
+[gd_scene load_steps=7 format=3 uid="uid://b7t70spt4wy6e"]
+
+[ext_resource type="Script" uid="uid://camh6t23facwv" path="res://stats_bar.gd" id="1_hky07"]
+[ext_resource type="Texture2D" uid="uid://dmm0cfyn1oot" path="res://Bunk HP.png" id="1_o52ab"]
+[ext_resource type="FontFile" uid="uid://baymv2h1j7ok2" path="res://Digitag.ttf" id="2_1heh6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o52ab"]
+bg_color = Color(0.905882, 0.905882, 0.905882, 1)
+corner_radius_top_left = 115
+corner_radius_bottom_right = 115
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1heh6"]
+bg_color = Color(0.976471, 0.0235294, 0.470588, 1)
+corner_radius_top_left = 115
+corner_radius_bottom_right = 115
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hky07"]
+bg_color = Color(0.192157, 0.505882, 0.941176, 1)
+corner_radius_top_left = 25
+corner_radius_bottom_right = 25
+
+[node name="StatsBar" type="Node2D"]
+position = Vector2(6, -1)
+scale = Vector2(1.15656, 1.15656)
+script = ExtResource("1_hky07")
+
+[node name="Sign" type="Sprite2D" parent="."]
+position = Vector2(200, 120)
+scale = Vector2(0.280001, 0.280001)
+texture = ExtResource("1_o52ab")
+
+[node name="HPBar" type="ProgressBar" parent="."]
+offset_left = 165.0
+offset_top = 91.0
+offset_right = 319.0
+offset_bottom = 103.0
+theme_override_styles/background = SubResource("StyleBoxFlat_o52ab")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1heh6")
+value = 100.0
+show_percentage = false
+
+[node name="HPLabel" type="Label" parent="HPBar"]
+layout_mode = 0
+offset_left = -8.0182
+offset_top = -17.618
+offset_right = 111.982
+offset_bottom = 68.382
+scale = Vector2(0.565769, 0.565769)
+theme_override_colors/font_shadow_color = Color(0.976471, 0.0235294, 0.470588, 1)
+theme_override_colors/font_outline_color = Color(0.976471, 0.0235294, 0.470588, 1)
+theme_override_fonts/font = ExtResource("2_1heh6")
+theme_override_font_sizes/font_size = 63
+text = "20/20"
+
+[node name="SPBar" type="ProgressBar" parent="."]
+offset_left = 164.0
+offset_top = 116.0
+offset_right = 318.0
+offset_bottom = 128.0
+theme_override_styles/background = SubResource("StyleBoxFlat_o52ab")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hky07")
+value = 100.0
+show_percentage = false
+
+[node name="SPLabel" type="Label" parent="SPBar"]
+layout_mode = 0
+offset_left = -8.0182
+offset_top = -17.618
+offset_right = 111.982
+offset_bottom = 68.382
+scale = Vector2(0.565769, 0.565769)
+theme_override_colors/font_shadow_color = Color(0.192157, 0.505882, 0.941176, 1)
+theme_override_colors/font_outline_color = Color(0.976471, 0.0235294, 0.470588, 1)
+theme_override_fonts/font = ExtResource("2_1heh6")
+theme_override_font_sizes/font_size = 63
+text = "20/20"

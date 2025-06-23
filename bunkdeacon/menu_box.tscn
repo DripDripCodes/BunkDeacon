@@ -1,0 +1,129 @@
+[gd_scene load_steps=6 format=3 uid="uid://bsi8lwgneum2n"]
+
+[ext_resource type="Script" uid="uid://m7tstmb30h65" path="res://menu_box.gd" id="1_1ysu2"]
+[ext_resource type="FontFile" uid="uid://baymv2h1j7ok2" path="res://Digitag.ttf" id="2_a1ehn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ygi77"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ysu2"]
+bg_color = Color(0.176471, 0.45098, 0.00392157, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+corner_detail = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1ysu2"]
+
+[node name="Menu Box" type="Control"]
+z_index = 1000
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_1ysu2")
+
+[node name="TextboxContainer2" type="MarginContainer" parent="."]
+z_index = -16
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 382.0
+offset_top = 460.0
+offset_right = 1121.0
+offset_bottom = 698.0
+grow_horizontal = 2
+scale = Vector2(1.045, 0.885001)
+theme_override_constants/margin_bottom = 25
+
+[node name="Panel" type="Panel" parent="TextboxContainer2"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ygi77")
+
+[node name="TextboxContainer" type="MarginContainer" parent="."]
+z_index = -16
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 388.0
+offset_top = 466.0
+offset_right = 1149.0
+offset_bottom = 698.0
+grow_horizontal = 2
+scale = Vector2(1, 0.846891)
+theme_override_constants/margin_bottom = 25
+
+[node name="Panel" type="Panel" parent="TextboxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1ysu2")
+
+[node name="Fight Button" type="Button" parent="."]
+z_index = 1000
+layout_mode = 0
+offset_left = 454.0
+offset_top = 461.0
+offset_right = 651.0
+offset_bottom = 574.0
+theme_override_colors/font_hover_color = Color(1, 0, 0.431373, 1)
+theme_override_fonts/font = ExtResource("2_a1ehn")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1ysu2")
+text = "Fight"
+flat = true
+
+[node name="Item Button" type="Button" parent="."]
+z_index = 1000
+layout_mode = 0
+offset_left = 760.0
+offset_top = 468.0
+offset_right = 957.0
+offset_bottom = 581.0
+theme_override_colors/font_hover_color = Color(1, 0.921569, 0.0431373, 1)
+theme_override_fonts/font = ExtResource("2_a1ehn")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1ysu2")
+text = "Items"
+flat = true
+
+[node name="Spray Button" type="Button" parent="."]
+top_level = true
+z_index = 1000
+layout_mode = 0
+offset_left = 547.0
+offset_top = 539.0
+offset_right = 744.0
+offset_bottom = 652.0
+theme_override_colors/font_hover_color = Color(0.513726, 0.219608, 0.92549, 1)
+theme_override_fonts/font = ExtResource("2_a1ehn")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1ysu2")
+text = "Spray"
+flat = true
+
+[node name="Flee Button" type="Button" parent="."]
+top_level = true
+z_index = 1000
+layout_mode = 0
+offset_left = 833.0
+offset_top = 540.0
+offset_right = 1030.0
+offset_bottom = 653.0
+theme_override_colors/font_hover_color = Color(0.227451, 0.52549, 1, 1)
+theme_override_fonts/font = ExtResource("2_a1ehn")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1ysu2")
+text = "Flee"
+flat = true

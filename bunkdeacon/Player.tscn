@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dcvs3pdrv4tmi" path="res://character_body_3d.gd" id="2_kne1u"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_kpjcp"]
-height = 2.98584
+height = 2.49207
 
 [node name="Node3D" type="CharacterBody3D"]
 axis_lock_linear_y = true
@@ -12,11 +12,28 @@ axis_lock_angular_y = true
 script = ExtResource("2_kne1u")
 
 [node name="Model" parent="." instance=ExtResource("1_t42c4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2487, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.849119, 0.528201, 0, -0.528201, 0.849119, 0, 9.75518, 10.8003)
 current = true
+fov = 56.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Camera3D"]
+light_energy = 0.865
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+sky_mode = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.76001, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.59021, 0)
 shape = SubResource("CylinderShape3D_kpjcp")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.76001, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0770874, 0)
+shape = SubResource("CylinderShape3D_kpjcp")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered "]

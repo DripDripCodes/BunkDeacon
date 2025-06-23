@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwh0q1qfyj03x"]
+
+[ext_resource type="Script" uid="uid://cmbf1r1s4gmwg" path="res://card.gd" id="1_kikvd"]
+[ext_resource type="Texture2D" uid="uid://de8imsggceslh" path="res://Cursor.png" id="2_rjlel"]
+[ext_resource type="Texture2D" uid="uid://be8fwfhx0lr1n" path="res://FireSticker.png" id="3_q5obu"]
+
+[node name="Card" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_kikvd")
+sprite = ExtResource("2_rjlel")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+offset_right = 3743.0
+offset_bottom = 3341.0
+scale = Vector2(0.035, 0.035)
+texture_normal = ExtResource("3_q5obu")
+stretch_mode = 0
+
+[connection signal="button_down" from="TextureButton" to="." method="_on_texture_button_button_down"]

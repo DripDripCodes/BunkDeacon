@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://bamkkudvuum2q"]
+
+[ext_resource type="Script" uid="uid://brho08olkkap8" path="res://spell_box.gd" id="1_dccx3"]
+[ext_resource type="FontFile" uid="uid://baymv2h1j7ok2" path="res://Digitag.ttf" id="2_o4s4h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ysu2"]
+bg_color = Color(0.176471, 0.45098, 0.00392157, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+corner_detail = 10
+
+[node name="Spell Box" type="Control"]
+z_index = 4096
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_dccx3")
+
+[node name="Panel" type="Panel" parent="."]
+z_index = 10
+layout_mode = 2
+offset_left = 371.0
+offset_top = 95.0
+offset_right = 1149.0
+offset_bottom = 646.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1ysu2")
+
+[node name="GridContainer" type="GridContainer" parent="Panel"]
+z_index = 10
+clip_contents = true
+layout_mode = 0
+offset_left = 26.0
+offset_top = 23.0
+offset_right = 755.0
+offset_bottom = 528.0
+theme_override_constants/h_separation = 150
+theme_override_constants/v_separation = 150
+columns = 5
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 689.0
+offset_top = 14.0
+offset_right = 748.0
+offset_bottom = 75.0
+theme_override_fonts/font = ExtResource("2_o4s4h")
+theme_override_font_sizes/font_size = 50
+text = "X"
+flat = true
+
+[connection signal="button_down" from="Panel/Button" to="." method="_on_button_button_down"]

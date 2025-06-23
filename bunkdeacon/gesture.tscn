@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://dunnikaxjdoup"]
+
+[ext_resource type="Script" uid="uid://b35unh7xmn0p7" path="res://addons/gesture_recognizer/scripts/ControlGesture.gd" id="1_axsl6"]
+
+[sub_resource type="Curve" id="Curve_axsl6"]
+_data = [Vector2(0.269841, 1), 0.0, 0.0, 0, 0, Vector2(0.899471, 0.831461), 0.0, 0.0, 0, 0, Vector2(1, 0.662921), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_axsl6"]
+size = Vector2(1172, 660)
+
+[node name="Gesture" type="Area2D"]
+z_index = 100
+script = ExtResource("1_axsl6")
+capMode = 12
+lineWidth = 17
+widthCurve = SubResource("Curve_axsl6")
+Outline = false
+outlineColor = Color(1, 1, 1, 1)
+buttonForClassifyUI = "x"
+metadata/_custom_type_script = "uid://b35unh7xmn0p7"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(576, 320)
+shape = SubResource("RectangleShape2D_axsl6")

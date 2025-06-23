@@ -1,0 +1,111 @@
+[gd_scene load_steps=5 format=3 uid="uid://cl4wfc2ss4k3c"]
+
+[ext_resource type="Script" uid="uid://dxbcqyhsmqjao" path="res://textbox.gd" id="1_ptcjm"]
+[ext_resource type="Texture2D" uid="uid://bwy1j0xntu2hb" path="res://1056957-200.png" id="2_ptcjm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_us7u2"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4fg7c"]
+
+[node name="Textbox" type="CanvasLayer"]
+script = ExtResource("1_ptcjm")
+
+[node name="TextboxContainer" type="MarginContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 64.0
+offset_top = 24.0
+offset_right = -64.0
+offset_bottom = 192.0
+grow_horizontal = 2
+theme_override_constants/margin_bottom = 25
+
+[node name="Panel" type="Panel" parent="TextboxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_us7u2")
+
+[node name="MarginContainer" type="MarginContainer" parent="TextboxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 25
+
+[node name="Panel" type="Panel" parent="TextboxContainer/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextboxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Start" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 35
+text = "*"
+
+[node name="Label" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 35
+text = "Text
+"
+autowrap_mode = 3
+
+[node name="End" type="Sprite2D" parent="TextboxContainer/MarginContainer/HBoxContainer"]
+visible = false
+texture_filter = 2
+material = SubResource("ShaderMaterial_4fg7c")
+position = Vector2(830, 70)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_ptcjm")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Name Container" type="MarginContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 904.0
+offset_top = 6.0
+offset_right = -44.0
+offset_bottom = 80.0
+grow_horizontal = 2
+
+[node name="Panel" type="Panel" parent="Name Container"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_us7u2")
+
+[node name="MarginContainer" type="MarginContainer" parent="Name Container"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+
+[node name="Panel" type="Panel" parent="Name Container/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Name Container/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Name Container/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 35
+text = "Text"
+autowrap_mode = 3
+
+[connection signal="finished_displaying" from="." to="." method="_on_finished_displaying"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
