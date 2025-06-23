@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://byuosnqxfes05"]
+
+[ext_resource type="PackedScene" uid="uid://bgj70dkvkrh0e" path="res://bunk.gltf" id="1_t42c4"]
+[ext_resource type="Script" uid="uid://dcvs3pdrv4tmi" path="res://character_body_3d.gd" id="2_kne1u"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kpjcp"]
+height = 2.98584
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+script = ExtResource("2_kne1u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.76001, 0)
+shape = SubResource("CylinderShape3D_kpjcp")
+
+[node name="Model" parent="CharacterBody3D" instance=ExtResource("1_t42c4")]
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.849119, 0.528201, 0, -0.528201, 0.849119, 0, 9.75518, 10.8003)

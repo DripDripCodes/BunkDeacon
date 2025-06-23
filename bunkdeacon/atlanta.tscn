@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwd52lnhicfe4"]
+
+[ext_resource type="PackedScene" uid="uid://byuosnqxfes05" path="res://Player.tscn" id="1_b53jo"]
+
+[sub_resource type="Environment" id="Environment_tlknl"]
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 12.0
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tlknl")
+
+[node name="Node3D" parent="." instance=ExtResource("1_b53jo")]
