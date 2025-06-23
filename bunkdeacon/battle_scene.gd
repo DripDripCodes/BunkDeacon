@@ -122,11 +122,14 @@ func main_flee_down():
 	
 func _on_tb_finish():
 	if phase == "calling":
-		for x in get_children():
-			if x is Battle_Textbox:
-				x.queue_free()
-				callout_ended = true
-				callout_box_closed.emit()
+		if spelling == false:
+			for x in get_children():
+				if x is Battle_Textbox:
+					x.queue_free()
+					callout_ended = true
+					callout_box_closed.emit()
+
+
 	if phase == "end":
 		end()
 
@@ -171,20 +174,21 @@ func action_for_player(x):
 				var draw_surface = draw.instantiate()
 				add_child(draw_surface)
 				draw_surface.lineColor = Color(1,0,.35)
-				var box2 = spellbox.instantiate()
+				var box2 = textbox.instantiate()
 				add_child(box2)
 				box2.display_text("Draw as many triangles as possible to deal the most damage!")
 				spelling = true
 				await get_tree().create_timer(5).timeout
-				spelling=false
-				_on_tb_finish()
+				
 				var box = textbox.instantiate()
 				box.finished_displaying.connect(_on_tb_finish)
 				add_child(box)
-				spell_count
 				var dmg =  (floor(int(float(Main.player_current_stats[2])*(float(spell_count)/float(5))/float(enemy_stats[3])) + randi_range(3,5)))
-				box.display_text("You burned the " + enemy_stats[0] + " for " + str(dmg))
+				enemy_stats[1] -= dmg  
+				box.display_text("You burned the " + enemy_stats[0] + " for " + str(dmg) + " ")
 				callout_ended = true
+				spelling = false
+
 				draw_surface.queue_free()
 
 	else:

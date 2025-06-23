@@ -1,13 +1,110 @@
-[gd_scene format=3 uid="uid://bp5bxsurqb61f"]
+[gd_scene load_steps=6 format=3 uid="uid://bp5bxsurqb61f"]
 
-[node name="MissingNode" type="Object"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-script = null
+[ext_resource type="Script" uid="uid://c2bq7wbpud7v8" path="res://textbox_spells.gd" id="1_gjk7v"]
+[ext_resource type="FontFile" uid="uid://1h2fxvfu602o" path="res://Hurry Up.otf" id="1_ivxcu"]
+[ext_resource type="Texture2D" uid="uid://bwy1j0xntu2hb" path="res://1056957-200.png" id="2_gjk7v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a57s7"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7l3cf"]
+
+[node name="MissingNode" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_gjk7v")
+
+[node name="TextboxContainer" type="MarginContainer" parent="."]
+offset_left = 18.0
+offset_top = 24.0
+offset_right = 1139.0
+offset_bottom = 200.0
+theme_override_constants/margin_bottom = 25
+
+[node name="Panel" type="Panel" parent="TextboxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a57s7")
+
+[node name="MarginContainer" type="MarginContainer" parent="TextboxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 25
+
+[node name="Panel" type="Panel" parent="TextboxContainer/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextboxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Start" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 35
+text = "*"
+
+[node name="Label" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("1_ivxcu")
+theme_override_font_sizes/font_size = 40
+text = "Text
+"
+autowrap_mode = 3
+
+[node name="End" type="Sprite2D" parent="TextboxContainer/MarginContainer/HBoxContainer"]
+visible = false
+texture_filter = 2
+material = SubResource("ShaderMaterial_7l3cf")
+position = Vector2(830, 70)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_gjk7v")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Name Container" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 917.0
+offset_top = 7.0
+offset_right = 1139.0
+offset_bottom = 72.0
+grow_horizontal = 2
+
+[node name="Panel" type="Panel" parent="Name Container"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a57s7")
+
+[node name="MarginContainer" type="MarginContainer" parent="Name Container"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 25
+
+[node name="Panel" type="Panel" parent="Name Container/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Name Container/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Name Container/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 35
+text = "Text"
+autowrap_mode = 3
