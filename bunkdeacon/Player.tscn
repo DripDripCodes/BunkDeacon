@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://byuosnqxfes05"]
+[gd_scene load_steps=5 format=3 uid="uid://byuosnqxfes05"]
 
-[ext_resource type="PackedScene" uid="uid://bgj70dkvkrh0e" path="res://bunk.gltf" id="1_t42c4"]
+[ext_resource type="PackedScene" uid="uid://d23y0lwixdlmd" path="res://bunk.gltf" id="1_t42c4"]
 [ext_resource type="Script" uid="uid://dcvs3pdrv4tmi" path="res://character_body_3d.gd" id="2_kne1u"]
+[ext_resource type="Script" uid="uid://c43ik2o86mgo7" path="res://bunk.gd" id="3_kne1u"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_kpjcp"]
 height = 2.49207
@@ -12,7 +13,8 @@ axis_lock_angular_y = true
 script = ExtResource("2_kne1u")
 
 [node name="Model" parent="." instance=ExtResource("1_t42c4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2487, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0217994, 0)
+script = ExtResource("3_kne1u")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.849119, 0.528201, 0, -0.528201, 0.849119, 0, 9.75518, 10.8003)

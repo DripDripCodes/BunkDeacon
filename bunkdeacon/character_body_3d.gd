@@ -1,10 +1,12 @@
 extends CharacterBody3D
 class_name Player
 
-const SPEED = 10.0
+const SPEED = 13
 const JUMP_VELOCITY = 4.5
 
 @onready var model = $Model
+@onready var animation = $Model.animation
+
 func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
@@ -13,9 +15,11 @@ func _physics_process(delta):
 		var input_dir = Input.get_vector("a", "d", "w", "s")
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if direction:
+			animation.set_current_animation("Run")
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
 		else:
+			animation.set_current_animation("Still")
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
 		if Input.is_action_pressed("w"):
