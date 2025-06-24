@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://dq3jnbs0thte7"]
+
+[ext_resource type="Script" uid="uid://cqlpe4wx6jtxa" path="res://interactable.gd" id="1_wh154"]
+[ext_resource type="Texture2D" uid="uid://bwy1j0xntu2hb" path="res://1056957-200.png" id="3_0k2he"]
+[ext_resource type="Resource" uid="uid://cnw0221q3a2r2" path="res://PlaceHolder.dialogue" id="3_surkw"]
+[ext_resource type="PackedScene" uid="uid://c0t1hnaq6xly6" path="res://enemy.tscn" id="4_surkw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x3v40"]
+size = Vector3(1, 6.60938, 1)
+
+[node name="Interactable" type="Node3D"]
+script = ExtResource("1_wh154")
+dialogue_tree = ExtResource("3_surkw")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1.672, 0, 0, 0, 0.088, 0, 0, 0, 1.408, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.80469, 0)
+shape = SubResource("BoxShape3D_x3v40")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.08712, 0)
+texture = ExtResource("3_0k2he")
+
+[node name="Enemy" parent="." instance=ExtResource("4_surkw")]
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]

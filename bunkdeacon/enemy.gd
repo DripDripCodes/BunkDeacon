@@ -13,9 +13,11 @@ class_name Enemy
 var text_box = load("res://textbox.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var meshy = meshy.instantiate()
-	meshy.scale = Vector3(2,2,2)
-	add_child(meshy)
+	if meshy != null:
+		var meshy = meshy.instantiate()
+		meshy.scale = Vector3(2,2,2)
+
+		add_child(meshy)
 	pass # Replace with function body.
 
 
@@ -25,11 +27,11 @@ func _process(delta):
 		for x in get_tree().current_scene.get_children():
 			if x is Player:
 				if self.transform.origin.distance_to(x.position) < attack_radius:
-					print(self.position.angle_to(x.global_position))
 					self.global_rotation.y = self.position.angle_to(x.global_position)+.5
-					self.position += (x.position - self.position).normalized() /20
+					self.position += (x.position - self.position).normalized() /20 
 
 func _on_area_3d_area_entered(area):
+	print("Heyo!")
 	if area.get_parent() is Player:
 		Main.state = "battle"
 		Main.enemy = self

@@ -16,15 +16,21 @@ var player_stats_per_level = [
 	["You",70,13,8,7,50] #Level 6
 ]
 
+
 #spells
 var spell_selected = ""
 var fire_known = true
 var enemy = null
 var battle_scene = preload("res://battle_scene.tscn")
 
+#items
+var inventory = []
+var item_selected = ""
 
+#speech
+var talkee = null
 func _ready():
-	pass
+	inventory = [Items.items[0],Items.items[0],Items.items[0],Items.items[0],Items.items[0],Items.items[0]]
 	
 
 
@@ -40,6 +46,8 @@ func _process(delta):
 			get_tree().current_scene.add_child(bs)
 			state = "battle_phases"
 		"pause":
+			move_lock = true
+		"talking":
 			move_lock = true
 
 func wait(seconds: float) -> void:

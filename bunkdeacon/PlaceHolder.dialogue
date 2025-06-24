@@ -1,0 +1,9 @@
+~ start
+Spritterbug: *scurrying noises*
+
+Bunk: Wow! What a gross ass creature!
+
+
+set Main.state = "ow"
+set Main.talkee.end = true
+=> END

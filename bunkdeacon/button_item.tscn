@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctgc1kk8bxi40"]
+
+[ext_resource type="FontFile" uid="uid://baymv2h1j7ok2" path="res://Digitag.ttf" id="1_1ybha"]
+[ext_resource type="Script" uid="uid://m5t37gladndw" path="res://button_item.gd" id="2_ar223"]
+
+[node name="ButtonItem" type="Button"]
+theme_override_fonts/font = ExtResource("1_1ybha")
+theme_override_font_sizes/font_size = 60
+text = "Borger"
+flat = true
+script = ExtResource("2_ar223")
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]

@@ -10,7 +10,7 @@ var textbox = load("res://textbox_battle.tscn")
 var spellbox = preload("res://textbox_spells.tscn")
 var bkg_image = load("res://backgroun_1.tscn")
 var main_menu = load("res://menu_box.tscn")
-
+var items = load("res://item_box.tscn")
 
 var timer = preload("res://timer.tscn")
 var draw = load("res://gesture.tscn")
@@ -58,7 +58,8 @@ func _process(delta):
 		box.display_text("You win! ")
 		phase = "end"
 	if phase == "init":
-		enem_sprite.texture = enemy.enem_sprite
+		if enemy.enem_sprite != null:
+			enem_sprite.texture = enemy.enem_sprite
 		for x in Monster.basic_monsters[enemy.enem_stats]:
 			enemy_stats.append(x)
 		enemy_moves = Monster.monster_moves[enemy.enem_spells]
@@ -72,6 +73,9 @@ func _process(delta):
 	if phase == "player":
 		if Main.spell_selected != "":
 			player_choice = Main.spell_selected
+			phase = "monster"
+		if Main.item_selected != "":
+			player_choice = "Item:" + Main.item_selected
 			phase = "monster"
 	if phase == "monster":
 		monster_move = enemy_moves[randi_range(0,enemy_moves.size()-1)]
@@ -91,6 +95,7 @@ func _process(delta):
 		else:
 			phase = "player"
 			Main.spell_selected = ""
+			Main.item_selected =""
 
 func main_fight_down():
 	if phase == "player":
@@ -99,7 +104,8 @@ func main_fight_down():
 		print("Fight")
 func main_item_down():
 	if phase == "player":
-		print("Item")
+		var ib = items.instantiate()
+		add_child(ib)
 func main_spray_down():
 	if phase == "player":
 		var spellbook = spells.instantiate()
@@ -113,10 +119,13 @@ func main_flee_down():
 		print("Flee")
 	
 func _on_tb_finish():
+	
 	if phase == "calling":
 		if spelling == false:
 			for x in get_children():
 				if x is Battle_Textbox:
+					if enemy_stats[1] <= 0:
+						phase = "victory"
 					x.queue_free()
 					callout_ended = true
 					callout_box_closed.emit()
@@ -132,9 +141,7 @@ func done_drawing():
 
 func loop_actions(speeds):
 	print("loop_actions")
-	
 	for x in speeds:
-		
 		if spelling == false:
 			if callout_ended == true:
 				action_for_player(x)
@@ -161,6 +168,25 @@ func action_for_player(x):
 			var attackwordArray = ["punched", "drop kicked the shit out of", "sprayed paint into the eyes of"]
 			var attack_word = attackwordArray.pick_random()
 			box.display_text("You " + attack_word + " the " + enemy_stats[0] + " for " + str(dmg))
+		if p_action.get_slice(":",0) == "Item":
+			spelling = false
+			match  p_action.get_slice(":",2):
+				"Heal":
+					print("healing")
+					var heal = int(p_action.get_slice(":",3))
+					var box2 = textbox.instantiate()
+					box2.finished_displaying.connect(_on_tb_finish)
+					add_child(box2)
+					if Main.player_current_stats[1] == Main.player_stats[1]:
+						box2.display_text("HP is already maxxed out!")
+					if Main.player_current_stats[1] + heal >= Main.player_stats[1] and Main.player_current_stats[1] != Main.player_stats[1]:
+						box2.display_text("You used the " +  p_action.get_slice(":",1) + " and your HP maxxed out!!")
+						Main.player_current_stats[1] = Main.player_stats[1]
+					if Main.player_current_stats[1] + heal < Main.player_stats[1]:
+						box2.display_text("You used the " +  p_action.get_slice(":",1) + " and gained "+ str(heal) + " HP!!")
+						Main.player_current_stats[1] += heal
+				_:
+					pass
 		if p_action.get_slice(":",0) == "Spell": 
 			if p_action.get_slice(":",1) == "Fire": 
 				callout_ended = false
