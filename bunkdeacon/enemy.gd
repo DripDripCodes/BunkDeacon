@@ -27,7 +27,7 @@ func _process(delta):
 				if self.transform.origin.distance_to(x.position) < attack_radius:
 					print(self.position.angle_to(x.global_position))
 					self.global_rotation.y = self.position.angle_to(x.global_position)+.5
-					
+				
 					self.position += (x.position - self.position).normalized() /20
 
 
