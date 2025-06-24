@@ -24,6 +24,7 @@ anchors_preset = 0
 script = ExtResource("1_gjk7v")
 
 [node name="TextboxContainer" type="MarginContainer" parent="."]
+layout_mode = 0
 offset_left = 18.0
 offset_top = 24.0
 offset_right = 1139.0

@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://c0t1hnaq6xly6"]
+
+[ext_resource type="Script" uid="uid://baveb6yfqbc7a" path="res://enemy.gd" id="1_7k104"]
+[ext_resource type="Texture2D" uid="uid://d0wvhh5peeku7" path="res://Spritterbug.png" id="2_4gyqm"]
+[ext_resource type="PackedScene" uid="uid://k6gnccaa338a" path="res://spraybufg.gltf" id="3_qi2p4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4gyqm"]
+
+[node name="Enemy" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("1_7k104")
+enem_name = "Spritterbug"
+enem_sprite = ExtResource("2_4gyqm")
+enem_stats = 1
+meshy = ExtResource("3_qi2p4")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_4gyqm")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b35unh7xmn0p7" path="res://addons/gesture_recognizer/scripts/ControlGesture.gd" id="1_axsl6"]
 
 [sub_resource type="Curve" id="Curve_axsl6"]
+bake_resolution = 8
 _data = [Vector2(0.269841, 1), 0.0, 0.0, 0, 0, Vector2(0.899471, 0.831461), 0.0, 0.0, 0, 0, Vector2(1, 0.662921), 0.0, 0.0, 0, 0]
 point_count = 3
 

@@ -20,8 +20,8 @@ var phase = "init"
 
 #enemy stuff
 var enemy = null
-var enemy_moves = [1,1,1,1,1]
-var enemy_stats = [1,1,1,1,1]
+var enemy_moves = []
+var enemy_stats = []
 var enemy_sprite = null
 var en_name = ""
 
@@ -30,6 +30,7 @@ var monster_move = ""
 var spelling = false
 var spell_count = 0
 
+var draw_surface = draw.instantiate()
 var callout_ended = true
 signal callout_done
 signal callout_box_closed
@@ -57,12 +58,12 @@ func _process(delta):
 		box.display_text("You win! ")
 		phase = "end"
 	if phase == "init":
-		if enemy_sprite != null:
-			enem_sprite.texture = enemy_sprite
-		enemy_stats = Monster.basic_monsters[enemy.enem_stats]
-		
+		enem_sprite.texture = enemy.enem_sprite
+		for x in Monster.basic_monsters[enemy.enem_stats]:
+			enemy_stats.append(x)
 		enemy_moves = Monster.monster_moves[enemy.enem_spells]
-		en_name = enemy.enem_name
+		en_name = enemy_stats[0]
+		print(Monster.basic_monsters[enemy.enem_stats][1])
 		var box = textbox.instantiate()
 		box.finished_displaying.connect(_on_tb_finish)
 		add_child(box)
@@ -90,15 +91,6 @@ func _process(delta):
 		else:
 			phase = "player"
 			Main.spell_selected = ""
-	if spelling == true:
-		var draw_board
-
-		if player_choice == "Fire":
-			for x in get_children():
-				if x is Gesture:
-					draw_board = x
-			if draw_board.classify() == "Triangle":
-				spell_count += 1
 
 func main_fight_down():
 	if phase == "player":
@@ -142,6 +134,7 @@ func loop_actions(speeds):
 	print("loop_actions")
 	
 	for x in speeds:
+		
 		if spelling == false:
 			if callout_ended == true:
 				action_for_player(x)
@@ -171,8 +164,10 @@ func action_for_player(x):
 		if p_action.get_slice(":",0) == "Spell": 
 			if p_action.get_slice(":",1) == "Fire": 
 				callout_ended = false
-				var draw_surface = draw.instantiate()
+				Main.player_current_stats[5] -= 3
+			
 				add_child(draw_surface)
+				draw_surface.on_draw_exit.connect(draw_done)
 				draw_surface.lineColor = Color(1,0,.35)
 				var box2 = textbox.instantiate()
 				add_child(box2)
@@ -183,7 +178,8 @@ func action_for_player(x):
 				var box = textbox.instantiate()
 				box.finished_displaying.connect(_on_tb_finish)
 				add_child(box)
-				var dmg =  (floor(int(float(Main.player_current_stats[2])*(float(spell_count)/float(5))/float(enemy_stats[3])) + randi_range(3,5)))
+			
+				var dmg =  (floor(int(float(Main.player_current_stats[2])*(float(spell_count))/float(enemy_stats[3])) + randi_range(3,5)))
 				enemy_stats[1] -= dmg  
 				box.display_text("You burned the " + enemy_stats[0] + " for " + str(dmg) + " ")
 				callout_ended = true
@@ -220,3 +216,10 @@ func end():
 	Main.spell_selected = ""
 	enemy.queue_free()
 	queue_free()
+
+func draw_done():
+	if player_choice == "Spell:Fire":
+		print(draw_surface.classify())
+		if draw_surface.classify() == "Triangle":
+			spell_count += 1
+			print(draw_surface.classify())

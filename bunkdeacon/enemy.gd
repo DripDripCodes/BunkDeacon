@@ -7,21 +7,28 @@ class_name Enemy
 @export var enem_name: String
 @export var enem_sprite: Resource
 @export var enem_stats: int
+@export var meshy: Resource
 @onready var enem_spells = enem_stats
 
 var text_box = load("res://textbox.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
+	var meshy = meshy.instantiate()
+	meshy.scale = Vector3(2,2,2)
+	add_child(meshy)
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	for x in get_tree().current_scene.get_children():
-		if x is Player:
-			if self.transform.origin.distance_to(x.position) < attack_radius:
-				self.position += (x.position - self.position).normalized() /20
+	if Main.move_lock == false:
+		for x in get_tree().current_scene.get_children():
+			if x is Player:
+				if self.transform.origin.distance_to(x.position) < attack_radius:
+					print(self.position.angle_to(x.global_position))
+					self.global_rotation.y = self.position.angle_to(x.global_position)+.5
+					
+					self.position += (x.position - self.position).normalized() /20
 
 
 func _on_area_3d_area_entered(area):
