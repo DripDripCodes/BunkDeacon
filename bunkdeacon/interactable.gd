@@ -13,18 +13,21 @@ class_name Interactable
 @export var enem_mesh: Resource
 
 var entered = false
-var dialogue = ""
+@export var dialogue = ""
 var text_box = load("res://textbox.tscn")
 var talked_to = false
-var battle = true
+@export var battle = false
+@export var kill_on_talk = false
 var end = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
+
 	enemy.enem_sprite = enemy_sprite
 	enemy.enem_stats = enemy_stats
 	enemy.meshy = enem_mesh
 	enemy.position.y = 100000
 	click_sprite.visible = false
+
 	if meshy != null:
 		var meshy = meshy.instantiate()
 		meshy.scale = Vector3(2,2,2)
@@ -37,6 +40,7 @@ func _process(delta):
 	if entered and Input.is_action_just_pressed("z") and Main.state != "talking" and talked_to == false:
 		Main.state = "talking"
 		Main.talkee = self
+		Main.kill_on_talk = kill_on_talk
 		talked_to = true
 		if dialogue != "":
 			DialogueManager.show_example_dialogue_balloon(dialogue_tree,dialogue)

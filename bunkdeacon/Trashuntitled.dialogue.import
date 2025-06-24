@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://ctdoysy0gsgux"
+path="res://.godot/imported/Trashuntitled.dialogue-db027acfc3aaa86dc03d4b960d1701f3.tres"
+
+[deps]
+
+source_file="res://Trashuntitled.dialogue"
+dest_files=["res://.godot/imported/Trashuntitled.dialogue-db027acfc3aaa86dc03d4b960d1701f3.tres"]
+
+[params]
+
+defaults=true

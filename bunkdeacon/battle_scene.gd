@@ -55,6 +55,8 @@ func _process(delta):
 		var box = textbox.instantiate()
 		box.finished_displaying.connect(_on_tb_finish)
 		add_child(box)
+		if Main.kill_on_talk == true:
+			Main.talkee.queue_free()
 		box.display_text("You win! ")
 		phase = "end"
 	if phase == "init":

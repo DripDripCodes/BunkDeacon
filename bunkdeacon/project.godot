@@ -68,7 +68,7 @@ x={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://PlaceHolder.dialogue")
+locale/translations_pot_files=PackedStringArray("res://PlaceHolder.dialogue", "res://Buildinguntitled.dialogue", "res://Trashuntitled.dialogue")
 
 [physics]
 

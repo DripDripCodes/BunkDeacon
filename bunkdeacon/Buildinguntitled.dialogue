@@ -1,0 +1,15 @@
+~ start
+The "Ritz Cracker", a hotel chain you wouldn't even think of tagging
+It's seems almost like it was [wave]MEANT[/wave] to stop you! 
+
+set Main.state = "ow"
+set Main.talkee.end = true
+=> END
+
+~ Bodega
+It's Carl's Bodega! Still under construction by the developers...
+
+
+set Main.state = "ow"
+set Main.talkee.end = true
+=> END

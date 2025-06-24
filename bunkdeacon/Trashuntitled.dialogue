@@ -1,0 +1,7 @@
+~ start
+You dug through Carl's trash can...
+Fuckin' weirdo
+But you did find A [wave]Moldy Banana[/wave][do Main.inventory.append(Items.items[1])][do get_tree().current_scene.pickup.play()]
+set Main.state = "ow"
+set Main.talkee.end = true
+=> END

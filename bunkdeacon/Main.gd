@@ -28,9 +28,10 @@ var inventory = []
 var item_selected = ""
 
 #speech
+var kill_on_talk = false
 var talkee = null
 func _ready():
-	inventory = [Items.items[0],Items.items[0],Items.items[0],Items.items[0],Items.items[0],Items.items[0]]
+	inventory = []
 	
 
 
