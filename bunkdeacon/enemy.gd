@@ -29,7 +29,6 @@ func _process(delta):
 					self.global_rotation.y = self.position.angle_to(x.global_position)+.5
 					self.position += (x.position - self.position).normalized() /20
 
-
 func _on_area_3d_area_entered(area):
 	if area.get_parent() is Player:
 		Main.state = "battle"
