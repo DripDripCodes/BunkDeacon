@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjkye5v03hpu3"]
+
+[ext_resource type="AudioStream" uid="uid://b2as3yrcsvd1l" path="res://space-hip-hop-and-pop-type-beat-273586.mp3" id="1_g84o6"]
+[ext_resource type="Script" uid="uid://c15ja4mabe5uk" path="res://audio_stream_player.gd" id="2_td4n3"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_g84o6")
+volume_db = -8.107
+parameters/looping = true
+script = ExtResource("2_td4n3")

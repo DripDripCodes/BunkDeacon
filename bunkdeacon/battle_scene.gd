@@ -1,9 +1,11 @@
 
 extends CanvasLayer
-
+class_name Battle
 #images
 @onready var background = $Background
 @onready var enem_sprite = $"Enemy Sprite"
+@onready var music = $Music
+@onready var sounds = $Sounds
 
 var spells = preload("res://spell_box.tscn")
 var textbox = load("res://textbox_battle.tscn")
@@ -30,12 +32,13 @@ var monster_move = ""
 var spelling = false
 var spell_count = 0
 
-var draw_surface = draw.instantiate()
+
 var callout_ended = true
 signal callout_done
 signal callout_box_closed
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 
 	var bg_image = bkg_image.instantiate()
 	background.add_child(bg_image)
@@ -50,22 +53,36 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
 	if phase == "victory":
 		print("Victory")
 		var box = textbox.instantiate()
 		box.finished_displaying.connect(_on_tb_finish)
 		add_child(box)
 		if Main.kill_on_talk == true:
-			Main.talkee.queue_free()
+			if Main.talkee != null:
+				
+				Main.talkee.queue_free()
+		
 		box.display_text("You win! ")
+		music.stream = preload("res://Victory.wav")
+		music.play()
+		
 		phase = "end"
 	if phase == "init":
+
 		if enemy.enem_sprite != null:
 			enem_sprite.texture = enemy.enem_sprite
+		
 		for x in Monster.basic_monsters[enemy.enem_stats]:
 			enemy_stats.append(x)
 		enemy_moves = Monster.monster_moves[enemy.enem_spells]
 		en_name = enemy_stats[0]
+
+		$ProgressBar.value = (enemy_stats[1]/Monster.basic_monsters[enemy.enem_stats][1])*100
+		if en_name != "Frankzi":
+			music.stream = load("res://Battle.mp3")
+			music.play()
 		print(Monster.basic_monsters[enemy.enem_stats][1])
 		var box = textbox.instantiate()
 		box.finished_displaying.connect(_on_tb_finish)
@@ -73,16 +90,20 @@ func _process(delta):
 		box.display_text(en_name + " approaches! ")
 		phase = "player"
 	if phase == "player":
+		$ProgressBar.value = (enemy_stats[1]/Monster.basic_monsters[enemy.enem_stats][1])*100
 		if Main.spell_selected != "":
 			player_choice = Main.spell_selected
+			print(player_choice)
 			phase = "monster"
 		if Main.item_selected != "":
 			player_choice = "Item:" + Main.item_selected
 			phase = "monster"
 	if phase == "monster":
+		$ProgressBar.value = (enemy_stats[1]/Monster.basic_monsters[enemy.enem_stats][1])*100
 		monster_move = enemy_moves[randi_range(0,enemy_moves.size()-1)]
 		phase = "callout"
 	if phase == "callout":
+		$ProgressBar.value = (enemy_stats[1]/Monster.basic_monsters[enemy.enem_stats][1])*100
 		var speeds = []
 		speeds.append("You:"+str(Main.player_current_stats[4]))
 		speeds.append(str(enemy_stats[4]))
@@ -95,9 +116,12 @@ func _process(delta):
 		if enemy_stats[1] <= 0:
 			phase = "victory"
 		else:
-			phase = "player"
+			spelling = false
+			callout_ended = true
 			Main.spell_selected = ""
 			Main.item_selected =""
+			phase = "player"
+			
 
 func main_fight_down():
 	if phase == "player":
@@ -117,11 +141,12 @@ func main_flee_down():
 	if phase == "player":
 		Main.state = "ow"
 		queue_free()
-		enemy.queue_free()
+		if enemy.kill_on_flee == true:
+			enemy.queue_free()
 		print("Flee")
 	
 func _on_tb_finish():
-	
+
 	if phase == "calling":
 		if spelling == false:
 			for x in get_children():
@@ -134,6 +159,7 @@ func _on_tb_finish():
 
 
 	if phase == "end":
+
 		end()
 
 func done_drawing():
@@ -143,21 +169,27 @@ func done_drawing():
 
 func loop_actions(speeds):
 	print("loop_actions")
+	$ProgressBar.value = (enemy_stats[1]/Monster.basic_monsters[enemy.enem_stats][1])*100
 	for x in speeds:
+		print(x)
 		if spelling == false:
+			print("spelling")
+			print(callout_ended)
 			if callout_ended == true:
-				action_for_player(x)
-				await callout_box_closed 
-				if speeds.find(x) == speeds.size()-1:
-					print("yipee!")
+				print("callout_ended")
+				if phase != "end" and phase != "victory":
+					action_for_player(x)
+					await callout_box_closed 
+					if speeds.find(x) == speeds.size()-1:
+						print("yipee!")
 					callout_done.emit()
 func action_for_player(x):
-	print("action_for_player")
-	callout_ended = false
+	print(player_choice)
+
 	var name = x.get_slice(":",0)
 	if name != "You":
 		name = enemy_stats[0]
-	print(name)
+	
 	if name == "You":
 		var p_action = player_choice
 		if p_action.get_slice(":",0) == "Attack":
@@ -169,7 +201,8 @@ func action_for_player(x):
 			add_child(box)
 			var attackwordArray = ["punched", "drop kicked the shit out of", "sprayed paint into the eyes of"]
 			var attack_word = attackwordArray.pick_random()
-			box.display_text("You " + attack_word + " the " + enemy_stats[0] + " for " + str(dmg))
+			box.display_text("You " + attack_word + " the " + enemy_stats[0] + " for " + str(int(dmg))+"                        ")
+
 		if p_action.get_slice(":",0) == "Item":
 			spelling = false
 			match  p_action.get_slice(":",2):
@@ -193,7 +226,7 @@ func action_for_player(x):
 			if p_action.get_slice(":",1) == "Fire": 
 				callout_ended = false
 				Main.player_current_stats[5] -= 3
-			
+				var draw_surface = draw.instantiate()
 				add_child(draw_surface)
 				draw_surface.on_draw_exit.connect(draw_done)
 				draw_surface.lineColor = Color(1,0,.35)
@@ -240,13 +273,20 @@ func reset():
 	Main.spell_selected = ""
 	
 func end():
+	await get_tree().create_timer(1).timeout
 	Main.state = "ow"
 	Main.spell_selected = ""
-	enemy.queue_free()
+	if enemy!= null:
+		
+		enemy.queue_free()
 	queue_free()
 
 func draw_done():
+	var draw_surface
 	if player_choice == "Spell:Fire":
+		for x in get_children():
+			if x is Gesture:
+				draw_surface = x
 		print(draw_surface.classify())
 		if draw_surface.classify() == "Triangle":
 			spell_count += 1

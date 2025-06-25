@@ -13,6 +13,7 @@ enem_name = "Spritterbug"
 enem_sprite = ExtResource("2_4gyqm")
 enem_stats = 1
 meshy = ExtResource("3_qi2p4")
+speed = 20.0
 
 [node name="Area3D" type="Area3D" parent="."]
 

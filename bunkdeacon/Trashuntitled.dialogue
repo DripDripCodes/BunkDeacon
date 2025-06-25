@@ -5,3 +5,10 @@ But you did find A [wave]Moldy Banana[/wave][do Main.inventory.append(Items.item
 set Main.state = "ow"
 set Main.talkee.end = true
 => END
+~ Trash2
+You dug through the trash can...
+And you did find A [wave]Burger Town Borger[/wave]![do Main.inventory.append(Items.items[0])][do get_tree().current_scene.pickup.play()]
+set Main.state = "ow"
+set Main.talkee.end = true
+set Main.kill = true
+=> END

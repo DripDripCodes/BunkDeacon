@@ -11,6 +11,7 @@ script = ExtResource("1_kikvd")
 sprite = ExtResource("2_rjlel")
 
 [node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
 offset_right = 3743.0
 offset_bottom = 3341.0
 scale = Vector2(0.035, 0.035)

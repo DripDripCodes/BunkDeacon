@@ -3,7 +3,7 @@ extends Node
 var basic_monsters=[
 	##Name, Health, Attack, Defense, Speed
 	["PLACEHOLDER",1,3,3,3],
-	["Spritterbug",10,3,3,3]
+	["Spritterbug",15,5,5,3]
 ]
 
 

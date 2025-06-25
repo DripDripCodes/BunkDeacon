@@ -1,0 +1,16 @@
+~ start
+Mysterious Voice: [wave]Chosen One...[/wave]
+Bunk: H-Hello?!
+Mysterious Voice: [wave]I have chosen [shake]you[/shake] to be my chosen disciple[/wave]
+Mysterious Voice: [wave]You shall bring artistic peace to this place-[wave]
+Bunk: Oh... Rad!
+Mysterious Voice: Let me finish.
+Bunk: Ah- Sorry, my bad
+God Of Steez: [wave]You must venture forth, through the highway tunnel and take down the dasturdly Frankzi! For I am the God of Steez![/wave]
+God Of Steez: [wave]and because his graffiti is totally [shake]wack[/shake]![wave]
+Bunk: Sweet! But how will I defeat him, my spray paint abilities are toally bogus!
+God Of Steez: [shake]Fear not![/shake] [wave]Bunk Deacon[/wave]
+God Of Steez: [wave]I shall bequeeth you with the power... TO PAINT![/wave]
+You recieved the Spray Paint of the Gods!
+Bunk: Righteous! I won't let you down![set Main.state=  "ow"]
+=> END

@@ -8,13 +8,15 @@ const JUMP_VELOCITY = 4.5
 @onready var animation = $Model.animation
 @onready var sound = $AudioStreamPlayer3D
 func _physics_process(delta):
-	print(Main.inventory)
+	if Main.state == "battle_init" or  Main.state == "talking":
+		sound.stop()
+		animation.set_current_animation("Still")
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	if Main.move_lock == false:
 		var input_dir = Input.get_vector("a", "d", "w", "s")
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		if direction:
+		if direction and Main.move_lock == false:
 			animation.set_current_animation("Run")
 			if sound.stream == null:
 				sound.stream = load("res://Run.mp3")

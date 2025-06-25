@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://ds3banqrjbq6"]
+
+[ext_resource type="Script" uid="uid://crdct1gymaee3" path="res://teleport.gd" id="1_njnk4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4u4ya"]
+size = Vector3(1, 6.60938, 1)
+
+[node name="Teleport" type="Node3D"]
+script = ExtResource("1_njnk4")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1.672, 0, 0, 0, 0.088, 0, 0, 0, 1.408, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.80469, 0)
+shape = SubResource("BoxShape3D_4u4ya")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

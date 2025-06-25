@@ -3,6 +3,11 @@ extends Node
 var selection = [0,0]
 var state = "ow"
 var move_lock = false
+
+
+var play_x = 0
+var play_y = 0
+
 ##Name, Health, Attack, Defense, Speed, SP
 var player_stats = ["You",20,5,5,5,10]
 var player_current_stats =["You",20,5,5,5,10]
@@ -28,16 +33,25 @@ var inventory = []
 var item_selected = ""
 
 #speech
+var kill = false
 var kill_on_talk = false
 var talkee = null
 func _ready():
 	inventory = []
-	
-
+	var play_x = 0
+	var play_y = 0
+	state = "ow"
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if kill:
+		talkee.queue_free()
+		kill = false
 	match state:
+		"Opening Cutscene":
+			move_lock = true
+			DialogueManager.show_example_dialogue_balloon(preload("res://Intro.dialogue"),"start")
+			state = "oc"
 		"ow":
 			move_lock = false
 		"battle":
@@ -46,6 +60,10 @@ func _process(delta):
 			bs.enemy = enemy
 			get_tree().current_scene.add_child(bs)
 			state = "battle_phases"
+
+		"battle_phases":
+			move_lock = true
+
 		"pause":
 			move_lock = true
 		"talking":

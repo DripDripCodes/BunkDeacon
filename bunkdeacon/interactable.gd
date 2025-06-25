@@ -11,7 +11,7 @@ class_name Interactable
 @export var enemy_sprite: Resource
 @export var enemy_stats: int
 @export var enem_mesh: Resource
-
+@export var kill_on_flee = false
 var entered = false
 @export var dialogue = ""
 var text_box = load("res://textbox.tscn")
@@ -40,6 +40,7 @@ func _process(delta):
 	if entered and Input.is_action_just_pressed("z") and Main.state != "talking" and talked_to == false:
 		Main.state = "talking"
 		Main.talkee = self
+		
 		Main.kill_on_talk = kill_on_talk
 		talked_to = true
 		if dialogue != "":
@@ -48,12 +49,14 @@ func _process(delta):
 			DialogueManager.show_example_dialogue_balloon(dialogue_tree,"start")
 	
 		click_sprite.visible = false
+		
 	if end == true:
 		if battle == true:
 			for x in get_tree().current_scene.get_children():
 				if x is Player:
-					enemy.area.global_position = x.global_position
-					battle = false
+					if enemy!=null:
+						enemy.area.global_position = x.global_position
+
 	for x in get_tree().current_scene.get_children():
 		if x is Player:
 			$Sprite3D.rotation = x.get_child(1).rotation

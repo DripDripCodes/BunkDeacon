@@ -1,0 +1,148 @@
+[gd_scene load_steps=20 format=3 uid="uid://bxootboglckes"]
+
+[ext_resource type="Script" uid="uid://c65hqog4ic2s7" path="res://battle_anime.gd" id="1_6tdtd"]
+[ext_resource type="Texture2D" uid="uid://dkrwxoyrc708b" path="res://battle-open.png" id="1_a6lnq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6lnq"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(13824, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ii3ps"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(14976, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7sio5"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(16128, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xj0wj"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(17280, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u11ox"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(18432, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2ox3"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(19584, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7qxia"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(20736, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6tdtd"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(0, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhjn0"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(5760, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5lgk"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(6912, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01ucg"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(8064, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hlj66"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(9216, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxux6"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(10368, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7i7pj"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(11520, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fy6k0"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(12672, 0, 1152, 648)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_verp7"]
+atlas = ExtResource("1_a6lnq")
+region = Rect2(13824, 0, 1152, 648)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cpr4o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a6lnq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ii3ps")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7sio5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xj0wj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u11ox")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h2ox3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7qxia")
+}],
+"loop": false,
+"name": &"battle-close",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6tdtd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dhjn0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5lgk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_01ucg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hlj66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxux6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7i7pj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fy6k0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_verp7")
+}],
+"loop": false,
+"name": &"battle-open",
+"speed": 10.0
+}]
+
+[node name="Battle_anime" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_6tdtd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(581, 322)
+sprite_frames = SubResource("SpriteFrames_cpr4o")
+animation = &"battle-close"
+frame = 6
+frame_progress = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+attenuation = 1e-05
+panning_strength = 0.0
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="animation_looped" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_looped"]
