@@ -15,4 +15,9 @@ func _process(delta):
 
 func _on_texture_button_button_down():
 	print("bello")
-	Main.spell_selected = "Spell:Fire"
+	if Main.player_current_stats[5] >= 3:
+		Main.spell_selected = "Spell:Fire"
+		get_parent().get_parent().queue_free()
+	else:
+		$AudioStreamPlayer2D.stream = load("res://Negatory.wav")
+		$AudioStreamPlayer2D.play()

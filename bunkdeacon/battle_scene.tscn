@@ -48,10 +48,10 @@ attenuation = 0.0126914
 panning_strength = 0.0
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
-offset_left = 396.0
-offset_top = 88.0
-offset_right = 735.0
-offset_bottom = 115.0
+offset_left = 416.0
+offset_top = 27.0
+offset_right = 755.0
+offset_bottom = 54.0
 theme_override_styles/background = SubResource("StyleBoxEmpty_5joda")
 theme_override_styles/fill = SubResource("StyleBoxFlat_5joda")
 value = 100.0

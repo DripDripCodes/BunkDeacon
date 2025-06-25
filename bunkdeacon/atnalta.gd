@@ -9,8 +9,7 @@ var play_x = Main.play_x
 var play_y = Main.play_y
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(play_x)
-	print(play_y)
+
 	var play= player.instantiate()
 	play.position.x = play_x 
 	play.position.z = play_y

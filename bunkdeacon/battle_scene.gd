@@ -53,7 +53,17 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
+	if Main.player_current_stats[1] <= 0 and phase != "loss" and phase != "end_loss":
+		phase = "loss"
+		
+	if phase == "loss":
+		var box = textbox.instantiate()
+		box.finished_displaying.connect(_on_tb_finish)
+		add_child(box)
+		box.display_text("You lose...")
+		phase = "end_loss"
+		loss()
+		
 	if phase == "victory":
 		print("Victory")
 		var box = textbox.instantiate()
@@ -61,10 +71,13 @@ func _process(delta):
 		add_child(box)
 		if Main.kill_on_talk == true:
 			if Main.talkee != null:
-				
 				Main.talkee.queue_free()
-		
-		box.display_text("You win! ")
+		if Main.after_battle_text != "":
+			DialogueManager.show_example_dialogue_balloon(load("res://Battler Text.dialogue"),Main.after_battle_text)
+			Main.after_battle_text = ""
+		box.display_text("You win! You gained " + str(enemy_stats[5]) + " xp!")
+
+		Main.player_xp += enemy_stats[5]
 		music.stream = preload("res://Victory.wav")
 		music.play()
 		
@@ -80,9 +93,17 @@ func _process(delta):
 		en_name = enemy_stats[0]
 
 		$ProgressBar.value = (enemy_stats[1]/Monster.basic_monsters[enemy.enem_stats][1])*100
-		if en_name != "Frankzi":
-			music.stream = load("res://Battle.mp3")
-			music.play()
+		print(en_name)
+		match en_name:
+	
+			"Frankzi Goon":
+				print()
+				music.stream = load("res://Alarm.mp3")
+				music.volume_db = -6
+				music.play()
+			_:
+				music.stream = load("res://Battle.mp3")
+				music.play()
 		print(Monster.basic_monsters[enemy.enem_stats][1])
 		var box = textbox.instantiate()
 		box.finished_displaying.connect(_on_tb_finish)
@@ -120,6 +141,7 @@ func _process(delta):
 			callout_ended = true
 			Main.spell_selected = ""
 			Main.item_selected =""
+			
 			phase = "player"
 			
 
@@ -223,7 +245,8 @@ func action_for_player(x):
 				_:
 					pass
 		if p_action.get_slice(":",0) == "Spell": 
-			if p_action.get_slice(":",1) == "Fire": 
+			if p_action.get_slice(":",1) == "Fire":
+
 				callout_ended = false
 				Main.player_current_stats[5] -= 3
 				var draw_surface = draw.instantiate()
@@ -242,6 +265,7 @@ func action_for_player(x):
 			
 				var dmg =  (floor(int(float(Main.player_current_stats[2])*(float(spell_count))/float(enemy_stats[3])) + randi_range(3,5)))
 				enemy_stats[1] -= dmg  
+				spell_count = 0
 				box.display_text("You burned the " + enemy_stats[0] + " for " + str(dmg) + " ")
 				callout_ended = true
 				spelling = false
@@ -277,9 +301,16 @@ func end():
 	Main.state = "ow"
 	Main.spell_selected = ""
 	if enemy!= null:
-		
 		enemy.queue_free()
 	queue_free()
+func loss():
+	await get_tree().create_timer(2).timeout
+	Main.state = "ow"
+	Main.spell_selected = ""
+	Main.player_current_stats[1] = 1
+	get_tree().reload_current_scene()
+	queue_free()
+
 
 func draw_done():
 	var draw_surface

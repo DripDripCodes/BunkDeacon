@@ -18,6 +18,10 @@ var text_box = load("res://textbox.tscn")
 var talked_to = false
 @export var battle = false
 @export var kill_on_talk = false
+@export var activate_on_step = false
+@export var before_battle_text: String
+@export var after_battle_text: String
+
 var end = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,10 +41,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if entered and Input.is_action_just_pressed("z") and Main.state != "talking" and talked_to == false:
+	if entered and Input.is_action_just_pressed("z") and Main.state != "talking" and talked_to == false and activate_on_step == false:
 		Main.state = "talking"
 		Main.talkee = self
-		
+		Main.before_battle_text = before_battle_text
+		Main.after_battle_text = after_battle_text
 		Main.kill_on_talk = kill_on_talk
 		talked_to = true
 		if dialogue != "":
@@ -49,7 +54,19 @@ func _process(delta):
 			DialogueManager.show_example_dialogue_balloon(dialogue_tree,"start")
 	
 		click_sprite.visible = false
-		
+	if entered and activate_on_step  and Main.state != "talking" and talked_to == false :
+		Main.state = "talking"
+		Main.talkee = self
+		Main.before_battle_text = before_battle_text
+		Main.after_battle_text = after_battle_text
+		Main.kill_on_talk = kill_on_talk
+		talked_to = true
+		if dialogue != "":
+			DialogueManager.show_example_dialogue_balloon(dialogue_tree,dialogue)
+		else:
+			DialogueManager.show_example_dialogue_balloon(dialogue_tree,"start")
+	
+		click_sprite.visible = false
 	if end == true:
 		if battle == true:
 			for x in get_tree().current_scene.get_children():

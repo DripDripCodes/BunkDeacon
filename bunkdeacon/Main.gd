@@ -12,7 +12,7 @@ var play_y = 0
 var player_stats = ["You",20,5,5,5,10]
 var player_current_stats =["You",20,5,5,5,10]
 var player_level = 1
-
+var player_xp = 0
 var player_stats_per_level = [
 	["You",25,7,5,5,15], #Level 2
 	["You",30,7,6,5,25], #Level 3
@@ -20,6 +20,7 @@ var player_stats_per_level = [
 	["You",55,11,8,6,40], #Level 5
 	["You",70,13,8,7,50] #Level 6
 ]
+var xp_per_level = [0,25,50,100,150,200,99999999999]
 
 
 #spells
@@ -36,6 +37,9 @@ var item_selected = ""
 var kill = false
 var kill_on_talk = false
 var talkee = null
+var before_battle_text= ""
+var after_battle_text= ""
+
 func _ready():
 	inventory = []
 	var play_x = 0
@@ -44,6 +48,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	print(player_xp)
+	if player_xp >= xp_per_level[player_level]:
+		player_level +=1
+	
+		player_stats = player_stats_per_level[player_level-1]
+		player_current_stats =player_stats_per_level[player_level-1]
 	if kill:
 		talkee.queue_free()
 		kill = false
@@ -59,15 +69,21 @@ func _process(delta):
 			var bs = battle_scene.instantiate()
 			bs.enemy = enemy
 			get_tree().current_scene.add_child(bs)
-			state = "battle_phases"
+			print(before_battle_text)
+			if before_battle_text == "":
+				state = "battle_phases"
+			else:
+				DialogueManager.show_example_dialogue_balloon(load("res://Battler Text.dialogue"),before_battle_text)
+				state = "battle_talk_intro"
 
 		"battle_phases":
 			move_lock = true
-
+			
 		"pause":
 			move_lock = true
 		"talking":
 			move_lock = true
+		
 
 func wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout

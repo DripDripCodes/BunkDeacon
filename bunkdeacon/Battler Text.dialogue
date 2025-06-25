@@ -1,0 +1,14 @@
+~ Goon1Start
+set Main.before_battle_text = ""
+set Main.state = "battle_phases"
+Frankzi Goon: [wave]Come at me![/wave]
+set Main.before_battle_text = ""
+=> END
+
+~ Goon1End
+Frankzi Goon: You haven't seen the last of me!
+set Main.after_battle_text = ""
+set Main.state = "end"
+set Main.move_lock = true
+=> END
+

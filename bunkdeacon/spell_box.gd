@@ -14,7 +14,7 @@ signal finished_displaying
 func _ready():
 	if Main.fire_known == true:
 		var sticker_new = sticker.instantiate()
-		sticker_new.get_child(0).button_down.connect(sticker_clicked)
+
 		var sprite = load("res://FireSticker.png")
 		sticker_new.sprite = sprite
 		sticker_new.spell = "Fire"
@@ -22,8 +22,6 @@ func _ready():
 func _process(delta):
 	pass
 
-func sticker_clicked():
-	queue_free()
 
 func _on_button_button_down():
 	queue_free()

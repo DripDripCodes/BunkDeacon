@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dajwvhvpjlmw"
+path="res://.godot/imported/Battler Text.dialogue-d20cd5f35d78e25d74e747a247a85a6e.tres"
+
+[deps]
+
+source_file="res://Battler Text.dialogue"
+dest_files=["res://.godot/imported/Battler Text.dialogue-d20cd5f35d78e25d74e747a247a85a6e.tres"]
+
+[params]
+
+defaults=true

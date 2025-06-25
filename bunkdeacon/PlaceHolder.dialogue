@@ -7,3 +7,24 @@ Bunk: Wow! What a gross ass creature!
 set Main.state = "ow"
 set Main.talkee.end = true
 => END
+
+~ Felicity_Alley
+Woman: All these [shake= 1] DAMN [/shake] bugs are [shake= 10] PISSING ME OFF! [/shake]
+Woman: I wish SOMEONE would just [shake= 1]KILL [/shake] them!
+Might be best to walk away from this one, Bunk...
+
+set Main.state = "ow"
+set Main.talkee.end = true
+=> END
+
+~ Goon1
+Goon: So then, I said to 'im. That's not a building, that's my wife! [shake]HAHAHAHAHAHAHAHA-[/shake]
+Goon: Hold up. I sense a presence behind me...
+Goon: What do you want? [set Main.talkee.rotation_degrees = Vector3(0,180,0)]
+Bunk: I'm going to uh... take down Frankzi. He like totally sucks right?
+Goon: Dude... That's my boss...
+Goon: And I won't let you take away my purpose!
+
+set Main.state = "ow"
+set Main.talkee.end = true
+=> END
