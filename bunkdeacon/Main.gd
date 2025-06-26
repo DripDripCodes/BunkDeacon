@@ -9,16 +9,16 @@ var play_x = 0
 var play_y = 0
 
 ##Name, Health, Attack, Defense, Speed, SP
-var player_stats = ["You",20,5,5,5,10]
+var player_stats = ["You",20,3,5,5,10]
 var player_current_stats =["You",20,5,5,5,10]
 var player_level = 1
 var player_xp = 0
 var player_stats_per_level = [
-	["You",25,7,5,5,15], #Level 2
-	["You",30,7,6,5,25], #Level 3
-	["You",40,9,6,6,30], #Level 4
-	["You",55,11,8,6,40], #Level 5
-	["You",70,13,8,7,50] #Level 6
+	["You",25,4,5,5,15], #Level 2
+	["You",30,4,6,5,25], #Level 3
+	["You",40,5,6,6,30], #Level 4
+	["You",55,9,8,6,40], #Level 5
+	["You",70,11,8,7,50] #Level 6
 ]
 var xp_per_level = [0,25,50,100,150,200,99999999999]
 

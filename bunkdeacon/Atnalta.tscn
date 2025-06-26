@@ -1,11 +1,9 @@
-[gd_scene load_steps=62 format=3 uid="uid://cistn0djaa7m6"]
+[gd_scene load_steps=59 format=3 uid="uid://cistn0djaa7m6"]
 
 [ext_resource type="Script" uid="uid://cmxrhos1qkiwl" path="res://atnalta.gd" id="1_x43o8"]
 [ext_resource type="Texture2D" uid="uid://d03k2amosgca5" path="res://GLB format/grass_03.png" id="2_f4qvt"]
 [ext_resource type="Texture2D" uid="uid://b4n10ginvq42v" path="res://concrete_01.png" id="2_g5uvh"]
 [ext_resource type="PackedScene" uid="uid://dq3jnbs0thte7" path="res://interactable.tscn" id="3_g5uvh"]
-[ext_resource type="PackedScene" uid="uid://k6gnccaa338a" path="res://spraybufg.gltf" id="4_d5mag"]
-[ext_resource type="Texture2D" uid="uid://d0wvhh5peeku7" path="res://Spritterbug.png" id="4_x3fh8"]
 [ext_resource type="Texture2D" uid="uid://dt01b2n62nhc3" path="res://concrete_11.jpg" id="6_cgb2v"]
 [ext_resource type="PackedScene" uid="uid://b5vopuaxx0g2a" path="res://GLB format/building-skyscraper-a.glb" id="7_1it1l"]
 [ext_resource type="PackedScene" uid="uid://bygxmcy6rs5fp" path="res://GLB format/building-skyscraper-c.glb" id="9_a84fr"]
@@ -45,10 +43,6 @@ add_uv2 = true
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1it1l"]
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_x3fh8"]
-height = 0.506592
-radius = 0.339844
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_x3fh8"]
 
@@ -235,22 +229,6 @@ light_specular = 2.971
 directional_shadow_mode = 0
 directional_shadow_fade_start = 0.755
 directional_shadow_max_distance = 83.0
-
-[node name="Interactable" parent="." instance=ExtResource("3_g5uvh")]
-transform = Transform3D(1.90777, 0, 0, 0, 1.90777, 0, 0, 0, 1.90777, 6.72622, 0, -0.17475)
-enemy_sprite = ExtResource("4_x3fh8")
-enemy_stats = 1
-battle = true
-kill_on_talk = true
-
-[node name="blockbench_export" parent="Interactable" instance=ExtResource("4_d5mag")]
-transform = Transform3D(-0.0509681, 0, 0.521688, 0, 0.524172, 0, -0.521688, 0, -0.0509681, 0.0686772, 0, 0.163454)
-
-[node name="RigidBody3D" type="RigidBody3D" parent="Interactable/blockbench_export"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable/blockbench_export/RigidBody3D"]
-transform = Transform3D(0.99999, 0, 7.82311e-07, 0, 1, 0, -7.82311e-07, 0, 0.99999, 0, 0.17688, 0)
-shape = SubResource("CylinderShape3D_x3fh8")
 
 [node name="Environment" type="Node3D" parent="."]
 

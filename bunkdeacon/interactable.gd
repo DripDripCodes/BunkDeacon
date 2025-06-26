@@ -24,10 +24,11 @@ var talked_to = false
 
 var end = false
 # Called when the node enters the scene tree for the first time.
-func _ready():
 
+func _ready():
 	enemy.enem_sprite = enemy_sprite
 	enemy.enem_stats = enemy_stats
+
 	enemy.meshy = enem_mesh
 	enemy.position.y = 100000
 	click_sprite.visible = false
