@@ -40,8 +40,6 @@ signal callout_box_closed
 func _ready():
 	
 
-	var bg_image = bkg_image.instantiate()
-	background.add_child(bg_image)
 
 	draw2.on_draw_exit.connect(done_drawing)
 	var mm = main_menu.instantiate()
@@ -89,7 +87,9 @@ func _process(delta):
 		
 		for x in Monster.basic_monsters[enemy.enem_stats]:
 			enemy_stats.append(x)
+		print(enemy.enem_spells)
 		enemy_moves = Monster.monster_moves[enemy.enem_spells]
+		print(enemy_moves)
 		en_name = enemy_stats[0]
 
 		$ProgressBar.value = (enemy_stats[1]/Monster.basic_monsters[enemy.enem_stats][1])*100
@@ -102,9 +102,18 @@ func _process(delta):
 				music.volume_db = -6
 				music.play()
 			_:
+	
 				music.stream = load("res://Battle.mp3")
 				music.play()
-		print(Monster.basic_monsters[enemy.enem_stats][1])
+		match en_name:
+			"Frankzi Goon":
+				var bg_image = load("res://background_2.tscn").instantiate()
+				background.add_child(bg_image)
+			_:
+				var bg_image = bkg_image.instantiate()
+				background.add_child(bg_image)
+				
+
 		var box = textbox.instantiate()
 		box.finished_displaying.connect(_on_tb_finish)
 		add_child(box)
@@ -121,7 +130,9 @@ func _process(delta):
 			phase = "monster"
 	if phase == "monster":
 		$ProgressBar.value = (enemy_stats[1]/Monster.basic_monsters[enemy.enem_stats][1])*100
+		print(enemy_moves)
 		monster_move = enemy_moves[randi_range(0,enemy_moves.size()-1)]
+		
 		phase = "callout"
 	if phase == "callout":
 		$ProgressBar.value = (enemy_stats[1]/Monster.basic_monsters[enemy.enem_stats][1])*100
@@ -130,7 +141,7 @@ func _process(delta):
 		speeds.append(str(enemy_stats[4]))
 		speeds.sort()
 		speeds.reverse()
-		print(speeds)
+
 		phase = "calling"
 		loop_actions(speeds)
 		await callout_done

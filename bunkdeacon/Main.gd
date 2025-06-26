@@ -48,7 +48,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	print(player_xp)
+
 	if player_xp >= xp_per_level[player_level]:
 		player_level +=1
 	
@@ -69,7 +69,7 @@ func _process(delta):
 			var bs = battle_scene.instantiate()
 			bs.enemy = enemy
 			get_tree().current_scene.add_child(bs)
-			print(before_battle_text)
+
 			if before_battle_text == "":
 				state = "battle_phases"
 			else:

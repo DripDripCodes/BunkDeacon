@@ -11,7 +11,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("1_7k104")
 enem_name = "Spritterbug"
 enem_sprite = ExtResource("2_4gyqm")
-enem_stats = 1
 meshy = ExtResource("3_qi2p4")
 speed = 20.0
 
