@@ -69,12 +69,8 @@ func _process(delta):
 			var bs = battle_scene.instantiate()
 			bs.enemy = enemy
 			get_tree().current_scene.add_child(bs)
-
-			if before_battle_text == "":
-				state = "battle_phases"
-			else:
-				DialogueManager.show_example_dialogue_balloon(load("res://Battler Text.dialogue"),before_battle_text)
-				state = "battle_talk_intro"
+			state = "battle_phases"
+	
 
 		"battle_phases":
 			move_lock = true

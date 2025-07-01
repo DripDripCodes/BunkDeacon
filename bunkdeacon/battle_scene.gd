@@ -70,9 +70,7 @@ func _process(delta):
 		if Main.kill_on_talk == true:
 			if Main.talkee != null:
 				Main.talkee.queue_free()
-		if Main.after_battle_text != "":
-			DialogueManager.show_example_dialogue_balloon(load("res://Battler Text.dialogue"),Main.after_battle_text)
-			Main.after_battle_text = ""
+
 		box.display_text("You win! You gained " + str(enemy_stats[5]) + " xp!")
 
 		Main.player_xp += enemy_stats[5]
