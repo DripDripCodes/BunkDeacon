@@ -1,0 +1,84 @@
+[gd_scene load_steps=13 format=3 uid="uid://cg6wnv6sl1h55"]
+
+[ext_resource type="Script" uid="uid://vllscww5eeoi" path="res://atnalta.gd" id="1_rhpd1"]
+[ext_resource type="Texture2D" uid="uid://d03k2amosgca5" path="res://GLB format/grass_03.png" id="2_xb5gr"]
+[ext_resource type="PackedScene" uid="uid://ise732ty0x8b" path="res://GLTF format/plant_bush.glb" id="3_tqw8v"]
+[ext_resource type="AudioStream" uid="uid://n4pkutla02hh" path="res://PickupItem.wav" id="4_7pm6x"]
+[ext_resource type="PackedScene" uid="uid://ds3banqrjbq6" path="res://teleport.tscn" id="5_g1stl"]
+[ext_resource type="Texture2D" uid="uid://b4n10ginvq42v" path="res://concrete_01.png" id="6_q3agb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d5mag"]
+albedo_texture = ExtResource("2_xb5gr")
+uv1_scale = Vector3(999.5, 999.5, 999.5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jck3s"]
+lightmap_size_hint = Vector2i(12, 12)
+material = SubResource("StandardMaterial3D_d5mag")
+add_uv2 = true
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bdb6l"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="Environment" id="Environment_2lwga"]
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 12.0
+fog_enabled = true
+fog_light_color = Color(0.873834, 0.953235, 1, 1)
+fog_light_energy = 0.3
+fog_height_density = 16.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4jv1s"]
+albedo_texture = ExtResource("6_q3agb")
+uv1_scale = Vector3(1000, 1000, 1000)
+uv1_offset = Vector3(0, -0.1, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2lwga"]
+material = SubResource("StandardMaterial3D_4jv1s")
+
+[node name="Underground" type="Node3D"]
+script = ExtResource("1_rhpd1")
+namae = "Under"
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0)
+
+[node name="Ground" type="MeshInstance3D" parent="StaticBody3D2"]
+mesh = SubResource("PlaneMesh_jck3s")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+shape = SubResource("ConcavePolygonShape3D_bdb6l")
+
+[node name="plant_bush2" parent="StaticBody3D2" instance=ExtResource("3_tqw8v")]
+transform = Transform3D(0.001, 0, 0, 0, 0.001, 0, 0, 0, 0.001, -0.059, 0.001, -0.082)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2lwga")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.567068, 0.823671, 0, -0.823671, -0.567068, 0, 20.8071, 0)
+light_energy = 0.586
+light_indirect_energy = 7.017
+light_volumetric_fog_energy = 7.378
+light_angular_distance = 31.62
+light_specular = 2.971
+directional_shadow_mode = 0
+directional_shadow_fade_start = 0.755
+directional_shadow_max_distance = 83.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Pickup" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_7pm6x")
+attenuation_model = 3
+panning_strength = 0.0
+
+[node name="Teleport" parent="." instance=ExtResource("5_g1stl")]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 1, -0.0285786, 0, 2.51687)
+port_scene = "res://alley_ways.tscn"
+port_x = -85.0
+port_y = -147.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(69.0964, 0, 0, 0, 32.9209, 0, 0, 0, 23.0474, 0, -10.0935, 16.7975)
+mesh = SubResource("BoxMesh_2lwga")

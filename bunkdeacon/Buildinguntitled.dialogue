@@ -7,8 +7,15 @@ set Main.talkee.end = true
 => END
 
 ~ Bodega
-It's Carl's Bodega! Still under construction by the developers...
+It's Carl's Bodega!
+Carl: Ayee! You don't look so good Bunk!
+Carl: Lemme patch youse up...
+Carl fed you the finest meal 5$ can buy...
+You feel energized
+Your HP and SP is maxxed out!
 
+set Main.player_current_stats[1] = Main.player_stats[1]
+set Main.player_current_stats[5] = Main.player_stats[5]
 
 set Main.state = "ow"
 set Main.talkee.end = true

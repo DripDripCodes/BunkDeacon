@@ -9,12 +9,15 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if get_tree().current_scene != null:
-		if get_tree().current_scene.namae == "Atnalta":
-			stop()
-		else:
-			if not playing:
-				play()
+	if get_tree().current_scene != null and get_tree().current_scene is not Gesture:
+		match get_tree().current_scene.namae:
+			"Atnalta","Alley":
+				if not playing and Main.state != "battle":
+					stream = load("res://Music1.mp3")
+					play()
+			_:
+				stop()
+			
 
 	if Main.state == "battle" or Main.state == "battle_phases":
 		stream_paused = true

@@ -32,6 +32,10 @@ var monster_move = ""
 var spelling = false
 var spell_count = 0
 
+#spell specific variables
+var bubble_timer = Timer.new()
+var bubble_size = 0
+var bubbled = [0,0]
 
 var callout_ended = true
 signal callout_done
@@ -51,6 +55,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
 	if Main.player_current_stats[1] <= 0 and phase != "loss" and phase != "end_loss":
 		phase = "loss"
 		
@@ -70,6 +75,12 @@ func _process(delta):
 		if Main.kill_on_talk == true:
 			if Main.talkee != null:
 				Main.talkee.queue_free()
+				if get_tree().current_scene != null and get_tree().current_scene is not Gesture:
+					
+					match enemy_stats[0]:
+						"Frankzi Goon":
+							if get_tree().current_scene.namae == "Alley":
+								Main.goon_alley_killed = true
 
 		box.display_text("You win! You gained " + str(enemy_stats[5]) + " xp!")
 
@@ -86,8 +97,9 @@ func _process(delta):
 		for x in Monster.basic_monsters[enemy.enem_stats]:
 			enemy_stats.append(x)
 		print(enemy.enem_spells)
-		enemy_moves = Monster.monster_moves[enemy.enem_spells]
+		enemy_moves = Monster.monster_moves[enemy.enem_stats]
 		print(enemy_moves)
+		
 		en_name = enemy_stats[0]
 
 		$ProgressBar.value = (enemy_stats[1]/Monster.basic_monsters[enemy.enem_stats][1])*100
@@ -135,11 +147,12 @@ func _process(delta):
 	if phase == "callout":
 		$ProgressBar.value = (enemy_stats[1]/Monster.basic_monsters[enemy.enem_stats][1])*100
 		var speeds = []
-		speeds.append("You:"+str(Main.player_current_stats[4]))
-		speeds.append(str(enemy_stats[4]))
-		speeds.sort()
-		speeds.reverse()
-
+		if Main.player_current_stats[4] > enemy_stats[4]:
+			speeds.append("You:"+str(Main.player_current_stats[4]))
+			speeds.append(str(enemy_stats[4]))
+		else:
+			speeds.append(str(enemy_stats[4]))
+			speeds.append("You:"+str(Main.player_current_stats[4]))
 		phase = "calling"
 		loop_actions(speeds)
 		await callout_done
@@ -170,11 +183,14 @@ func main_spray_down():
 		print("Spray")
 func main_flee_down():
 	if phase == "player":
-		Main.state = "ow"
-		queue_free()
-		if enemy.kill_on_flee == true:
-			enemy.queue_free()
-		print("Flee")
+		if enemy.fleeable == true:
+			Main.state = "ow"
+			queue_free()
+			if enemy.kill_on_flee == true:
+				enemy.queue_free()
+		else:
+			sounds.stream = load("res://Wrong.mp3")
+			sounds.play()
 	
 func _on_tb_finish():
 
@@ -199,7 +215,7 @@ func done_drawing():
 		print("Yippee!")
 
 func loop_actions(speeds):
-	print("loop_actions")
+	print(speeds)
 	$ProgressBar.value = (enemy_stats[1]/Monster.basic_monsters[enemy.enem_stats][1])*100
 	for x in speeds:
 		print(x)
@@ -211,9 +227,10 @@ func loop_actions(speeds):
 				if phase != "end" and phase != "victory":
 					action_for_player(x)
 					await callout_box_closed 
-					if speeds.find(x) == speeds.size()-1:
+					if speeds.find(x) >= speeds.size()-1:
+						print()
 						print("yipee!")
-					callout_done.emit()
+						callout_done.emit()	
 func action_for_player(x):
 	print(player_choice)
 
@@ -222,9 +239,16 @@ func action_for_player(x):
 		name = enemy_stats[0]
 	
 	if name == "You":
+		var dmg
 		var p_action = player_choice
 		if p_action.get_slice(":",0) == "Attack":
-			var dmg =  (floor((float(Main.player_current_stats[2])/float(enemy_stats[3])) + randi_range(2,3)))
+			if bubbled[1] == 0:
+				dmg =  (floor((float(Main.player_current_stats[2])/float(enemy_stats[3])) + randi_range(2,3)))
+			else:
+				dmg =  (floor((float(Main.player_current_stats[2])/(float(enemy_stats[3])/2)) + randi_range(5,6)))
+				bubbled[1] != 0
+				
+				
 			enemy_stats[1] -= dmg  
 			print(enemy_stats[1])
 			var box = textbox.instantiate()
@@ -254,33 +278,73 @@ func action_for_player(x):
 				_:
 					pass
 		if p_action.get_slice(":",0) == "Spell": 
-			if p_action.get_slice(":",1) == "Fire":
-
-				callout_ended = false
-				Main.player_current_stats[5] -= 3
-				var draw_surface = draw.instantiate()
-				add_child(draw_surface)
-				draw_surface.on_draw_exit.connect(draw_done)
-				draw_surface.lineColor = Color(1,0,.35)
-				var box2 = textbox.instantiate()
-				add_child(box2)
-				box2.display_text("Draw as many triangles as possible to deal the most damage!")
-				spelling = true
-				await get_tree().create_timer(5).timeout
+			match p_action.get_slice(":",1):
+				"Fire":
+					callout_ended = false
+					Main.player_current_stats[5] -= 3
+					var draw_surface = draw.instantiate()
+					add_child(draw_surface)
+					draw_surface.on_draw_exit.connect(draw_done)
+					draw_surface.lineColor = Color(1,0,.35)
+					var box2 = textbox.instantiate()
+					add_child(box2)
+					box2.display_text("Draw as many triangles as possible to deal the most damage!")
+					spelling = true
+					await get_tree().create_timer(5).timeout
+					
+					var box = textbox.instantiate()
+					box.finished_displaying.connect(_on_tb_finish)
+					add_child(box)
 				
-				var box = textbox.instantiate()
-				box.finished_displaying.connect(_on_tb_finish)
-				add_child(box)
-			
-				var dmg =  (floor(int(float(Main.player_current_stats[2])*(float(spell_count))/float(enemy_stats[3])) + randi_range(3,5)))
-				enemy_stats[1] -= dmg  
-				spell_count = 0
-				box.display_text("You burned the " + enemy_stats[0] + " for " + str(dmg) + " ")
-				callout_ended = true
-				spelling = false
+					dmg =  (floor(int(float(Main.player_current_stats[2])*(float(spell_count)/2)/float(enemy_stats[3])) + randi_range(0,1)))
+					enemy_stats[1] -= dmg  
+					spell_count = 0
+					box.display_text("You burned the " + enemy_stats[0] + " for " + str(dmg) + " ")
+					callout_ended = true
+					spelling = false
 
-				draw_surface.queue_free()
+					draw_surface.queue_free()
+				"Bubble":
+					callout_ended = false
+					Main.player_current_stats[5] -= 6
+					var draw_surface = draw.instantiate()
+					add_child(draw_surface)
+					draw_surface.on_draw_exit.connect(draw_done)
+					draw_surface.lineColor = Color(.2,.5,1)
+					var box2 = textbox.instantiate()
+					add_child(box2)
+					box2.display_text("Draw a circle!")
+					spelling = true
+					bubble_timer.wait_time = 2
+					await bubble_timer.timeout
+					var box3 = textbox.instantiate()
+					add_child(box3)
+					box3.display_text("Draw another circle!")
+					bubble_timer.wait_time = 2
+					await bubble_timer.timeout
+					var box4 = textbox.instantiate()
+					add_child(box4)
+					box4.display_text("Draw a final circle!")
+					bubble_timer.wait_time = 2
+					await bubble_timer.timeout
+					var box = textbox.instantiate()
+					box.finished_displaying.connect(_on_tb_finish)
+					add_child(box)
+					$"Enemy Sprite/AnimationPlayer".current_animation= "bubbled"
+					$"Enemy Sprite/AnimationPlayer".play()
+					box.display_text("You entrapped the enemy in a bubble for 4 damage! Physical attacks do more damage!")
+					enemy_stats[1] -= 4  
+					bubbled[1] = 1
+					callout_ended = true
+					spelling = false
 
+					draw_surface.queue_free()
+				_:
+					var box = textbox.instantiate()
+					box.finished_displaying.connect(_on_tb_finish)
+					add_child(box)
+					box.display_text("Aaron hasn't put in this spell yet dummy!")
+					spelling = false
 	else:
 		var words = monster_move.get_slice(":",2)
 		if monster_move.get_slice(":",0) == "Attack":
@@ -323,11 +387,21 @@ func loss():
 
 func draw_done():
 	var draw_surface
-	if player_choice == "Spell:Fire":
-		for x in get_children():
-			if x is Gesture:
-				draw_surface = x
-		print(draw_surface.classify())
-		if draw_surface.classify() == "Triangle":
-			spell_count += 1
-			print(draw_surface.classify())
+	match player_choice:
+		"Spell:Fire":
+			for x in get_children():
+				if x is Gesture:
+					draw_surface = x
+			if draw_surface.classify() == "Triangle":
+				spell_count += 1 
+				sounds.stream = load("res://Pickup2.wav")
+				sounds.play()
+
+		"Spell:Bubble":
+			for x in get_children():
+				if x is Gesture:
+					draw_surface = x
+			if draw_surface.classify() == "SCircle":
+				bubble_timer.timeout.emit()
+				sounds.stream = load("res://Pickup2.wav")
+				sounds.play()

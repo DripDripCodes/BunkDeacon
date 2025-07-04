@@ -11,6 +11,7 @@ class_name Enemy
 @export var meshy: Resource
 @onready var enem_spells = enem_stats
 @export var speed: float
+@export var fleeable = true
 var text_box = load("res://textbox.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():

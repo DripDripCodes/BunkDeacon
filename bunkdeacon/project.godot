@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="BunkDeacon"
-run/main_scene="uid://cistn0djaa7m6"
+run/main_scene="uid://b6bumpfgypt5o"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

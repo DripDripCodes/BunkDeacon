@@ -8,7 +8,7 @@ const JUMP_VELOCITY = 4.5
 @onready var animation = $Model.animation
 @onready var sound = $AudioStreamPlayer3D
 func _physics_process(delta):
-	if Main.state == "battle_init" or  Main.state == "talking":
+	if Main.state != "ow":
 		sound.stop()
 		animation.set_current_animation("Still")
 	# Get the input direction and handle the movement/deceleration.

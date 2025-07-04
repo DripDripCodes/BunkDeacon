@@ -18,6 +18,15 @@ func _ready():
 		var sprite = load("res://FireSticker.png")
 		sticker_new.sprite = sprite
 		sticker_new.spell = "Fire"
+		sticker_new.cost = 3
+		grid.add_child(sticker_new)
+	if Main.bubble_known == true:
+		var sticker_new = sticker.instantiate()
+
+		var sprite = load("res://bubble.png")
+		sticker_new.sprite = sprite
+		sticker_new.spell = "Bubble"
+		sticker_new.cost = 6
 		grid.add_child(sticker_new)
 func _process(delta):
 	pass
